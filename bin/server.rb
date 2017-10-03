@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'black_sky'
+require 'rack/cors'
+require 'sinatra'
+
+use Rack::Cors do
+  allow do
+    origins '*'
+    resource '*', headers: :any, methods: %w(get post options)
+  end
+end
+
+configure do
+  set :port, ENV['PORT'] || '5555'
+  set :public_folder, File.join(File.dirname(__FILE__), '../static')
+end
+
+# black_sky = BlackSky.new
+
+get "/index" do
+  # black_sky.extract.map {|k, v|
+  #   v.merge(id: k)
+  # }.to_json
+end
+
+post "/push" do
+  # h = JSON.parse(request.body.read)
+  # black_sky.download(h["url"], h["name"], h["header"] || [])
+end
+
+post "/cancel" do
+  # h = JSON.parse(request.body.read)
+  # black_sky.cancel(h["id"])
+end
