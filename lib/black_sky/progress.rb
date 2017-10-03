@@ -12,6 +12,16 @@ module BlackSky
       sync { @size = @size + size }
     end
 
+    def to_h
+      sync do
+        {
+          name: @name,
+          total: @total,
+          size: @size,
+        }
+      end
+    end
+
     private
     def sync(&block)
       @mutex.synchronize(&block)
