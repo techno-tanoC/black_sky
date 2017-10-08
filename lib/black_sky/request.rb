@@ -16,14 +16,6 @@ module BlackSky
       uri = URI.parse(url)
       req = Net::HTTP::Get.new(uri.path, headers)
 
-      # build_http(uri).start do |http|
-      #   http.request(req) do |res|
-      #     case res
-      #     when Net::HTTPSuccess
-      #       block.(res)
-      #     end
-      #   end
-      # end
       build_http(uri).request_get(uri.path, headers) do |res|
         case res
         when Net::HTTPSuccess
