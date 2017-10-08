@@ -12,12 +12,24 @@ module BlackSky
       sync { @store[key] }
     end
 
-    def store(key, val)
+    def add(key, val)
       sync { @store[key] = val }
+    end
+
+    def store(val)
+      uuid = SecureRandom
+      self.add(uuid, val)
     end
 
     def delete(key)
       sync { @store.delete(key) }
+    end
+
+    def bracket(key, val, &block)
+      self.add(key, val)
+      block.(key, val)
+    ensure
+      self.delete(key)
     end
 
     private
