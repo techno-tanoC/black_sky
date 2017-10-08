@@ -23,11 +23,11 @@ module BlackSky
 
     private
     def fresh_name(name, ext = "mp4", count = 0)
-      name = new_name(name, ext, count)
-      if File.exist?(name)
+      new_name = new_name(name, ext, count)
+      if File.exist?(new_name)
         fresh_name(name, ext, count + 1)
       else
-        name
+        new_name
       end
     end
 
