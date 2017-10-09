@@ -7,7 +7,7 @@ services:
       - "5555:5555"
     environment:
       - PORT=5555
-      - BLACK_SKY_STORAGE_PATH=/black_sky
+      - BLACK_SKY_STORAGE_PATH=/sky
     volumes:
       - "~/sky:/sky"
     tty: true
