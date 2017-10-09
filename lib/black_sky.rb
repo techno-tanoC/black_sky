@@ -1,25 +1,31 @@
+require 'securerandom'
+
 require 'black_sky/version'
-Dir["#{File.dirname(__FILE__)}/black_sky/*.rb"].sort.each do |path|
-  require "black_sky/#{File.basename(path, '.rb')}"
-end
+require 'black_sky/request'
+require 'black_sky/progress'
+require 'black_sky/store'
+require 'black_sky/renamer'
+require 'black_sky/agent'
 
 module BlackSky
   class Downloader
-    def initialize
+    def initialize(storage_path)
+      @renamer = Renamer.new(storage_path)
       @store = Store.new
-      @renamer = Renamer.new
     end
 
-    def with_temp(&block)
-      Tempfile.open("black_sky-", &block)
+    def download(name, url, headers = {})
+      Agent.new(name, @renamer, @store).async(url, headers)
     end
 
-    def with_progress(key, name, before, after, &block)
-      pg = BlackSky::Progress.new(name)
-      before.call(pg)
-      block.call(pg)
-    ensure
-      after.call(pg)
+    def all()
+      @store.all.map do |key, agent|
+        agent.to_h.merge({id: key})
+      end
+    end
+
+    def cancel(key)
+      @store.fetch(key).cancel()
     end
   end
 end
