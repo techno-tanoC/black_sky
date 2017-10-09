@@ -1,0 +1,14 @@
+version: "2"
+services:
+  app:
+    build: .
+    command: "bundle exec bin/server"
+    ports:
+      - "5555:5555"
+    environment:
+      - PORT=5555
+      - BLACK_SKY_STORAGE_PATH=/black_sky
+    volumes:
+      - "~/black_sky:/black_sky"
+    tty: true
+    stdin_open: true
