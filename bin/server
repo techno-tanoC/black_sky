@@ -17,20 +17,18 @@ configure do
   set :public_folder, File.join(File.dirname(__FILE__), '../static')
 end
 
-# black_sky = BlackSky.new
+black_sky = BlackSky::Downloader.new(ENV['BLACK_SKY_STORAGE_PATH'] || ".")
 
 get '/index' do
-  # black_sky.extract.map {|k, v|
-  #   v.merge(id: k)
-  # }.to_json
+  black_sky.all.to_json
 end
 
 post '/push' do
-  # h = JSON.parse(request.body.read)
-  # black_sky.download(h["url"], h["name"], h["header"] || [])
+  h = JSON.parse(request.body.read)
+  black_sky.download(h["name"], h["url"], h["header"] || [])
 end
 
 post '/cancel' do
-  # h = JSON.parse(request.body.read)
-  # black_sky.cancel(h["id"])
+  h = JSON.parse(request.body.read)
+  black_sky.cancel(h["key"])
 end
