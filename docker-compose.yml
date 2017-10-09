@@ -9,6 +9,6 @@ services:
       - PORT=5555
       - BLACK_SKY_STORAGE_PATH=/black_sky
     volumes:
-      - "~/black_sky:/black_sky"
+      - "~/sky:/sky"
     tty: true
     stdin_open: true
