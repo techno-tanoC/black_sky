@@ -25,7 +25,7 @@ end
 
 post '/push' do
   h = JSON.parse(request.body.read)
-  black_sky.download(h["name"], h["url"], h["header"] || [])
+  black_sky.download(h["name"], h["url"], h["header"] || {})
 end
 
 post '/cancel' do
