@@ -1,4 +1,6 @@
 .rspec_status
+node_modules
+static/app.js
 
 # Created by https://www.gitignore.io/api/ruby
 
