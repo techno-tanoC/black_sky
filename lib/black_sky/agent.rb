@@ -32,7 +32,7 @@ module BlackSky
           @pg.increment(chunk.bytesize)
         end
 
-        @renamer.rename(file.path, @name)
+        @renamer.copy(file.path, @name)
       end
     end
 

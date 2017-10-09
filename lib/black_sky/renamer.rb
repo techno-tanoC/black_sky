@@ -14,7 +14,7 @@ module BlackSky
 
     def copy(from, name)
       sync do
-        fresh = fresh_name(@dest, name)
+        fresh = fresh_name(name)
         FileUtils.copy(from, fresh)
         File.chown(1000, 1000, fresh)
         File.chmod(0600, fresh)
