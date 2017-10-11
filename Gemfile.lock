@@ -84,6 +84,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   black_sky!
   bundler (~> 1.15)
   guard

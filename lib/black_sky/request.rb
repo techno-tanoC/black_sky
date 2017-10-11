@@ -13,7 +13,7 @@ module BlackSky
 
     private
     def request(url, headers, limit = 10, &block)
-      uri = URI.parse(url)
+      uri = Addressable::URI.parse(url)
       req = Net::HTTP::Get.new(uri.path, headers)
 
       build_http(uri).request_get(uri.path, headers) do |res|
