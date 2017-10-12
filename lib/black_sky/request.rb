@@ -1,3 +1,4 @@
+require 'addressable'
 require 'net/http'
 require 'uri'
 

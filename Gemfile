@@ -8,4 +8,4 @@ gemspec
 gem 'rack-cors'
 gem 'sinatra'
 
-gem 'addressable', require: 'addressable/uri'
+gem 'addressable'
