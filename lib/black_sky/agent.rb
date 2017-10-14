@@ -3,7 +3,8 @@ require 'tempfile'
 module BlackSky
   class Agent
     def initialize(name, renamer, store)
-      @name, @renamer, @store = name, renamer, store
+      @name = name.gsub("/", " ")
+      @renamer, @store = renamer, store
       @pg, @thread = nil, nil
     end
 
