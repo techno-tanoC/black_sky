@@ -43,7 +43,7 @@ module BlackSky
         if uri.scheme == 'https'
           http.use_ssl = true
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          # http.ca_file = ""
+          # http.ca_file = "cacert.pem"
         end
       end
     end
