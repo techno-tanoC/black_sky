@@ -31,4 +31,5 @@ end
 post '/cancel' do
   h = JSON.parse(request.body.read)
   black_sky.cancel(h["key"])
+  ""
 end
