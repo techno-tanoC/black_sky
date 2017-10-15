@@ -7,5 +7,3 @@ gemspec
 
 gem 'rack-cors'
 gem 'sinatra'
-
-gem 'addressable'

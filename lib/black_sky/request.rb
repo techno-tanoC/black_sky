@@ -1,4 +1,3 @@
-require 'addressable'
 require 'net/http'
 require 'uri'
 
@@ -14,7 +13,7 @@ module BlackSky
 
     private
     def request(url, headers, limit = 10, &block)
-      uri = Addressable::URI.parse(url)
+      uri = URI.parse(url)
       req = Net::HTTP::Get.new(uri.path, headers)
 
       build_http(uri).request_get(uri.path, headers) do |res|
