@@ -17,8 +17,8 @@ module BlackSky
         begin
           sync(url, headers)
         rescue StandardError => e
-          puts e.inspect
-          puts e.backtrace
+          $BLACK_SKY_ERROR_LOGGER.error(e.inspect)
+          $BLACK_SKY_ERROR_LOGGER.error(e.backtrace)
         end
       end
     end

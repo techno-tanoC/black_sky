@@ -19,7 +19,7 @@ module BlackSky
         when Net::HTTPRedirection
           redirect(res, uri, headers, limit, &block)
         else
-          warn "request is not success nor redirection"
+          $BLACK_SKY_WARN_LOGGER.warn "request is not success nor redirection: #{uri}"
         end
       end
     end
@@ -34,7 +34,7 @@ module BlackSky
 
       # headers['Cookie'] = res['Set-Cookie'] if res['Set-Cookie']
 
-      warn "redirect to #{new_uri}"
+      $BLACK_SKY_WARN_LOGGER.warn "redirect to #{new_uri}"
       request(new_uri, headers, limit - 1, &block)
     end
 
