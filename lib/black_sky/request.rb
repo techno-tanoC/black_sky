@@ -3,17 +3,13 @@ require 'uri'
 
 module BlackSky
   class Request
-    def initialize(url, headers)
-      @url, @headers = url, headers
-    end
-
-    def with(&block)
-      request(@url, @headers, &block)
+    def initialize(url, headers, &block)
+      uri = URI.parse(url)
+      request(uri, headers, &block)
     end
 
     private
-    def request(url, headers, limit = 10, &block)
-      uri = URI.parse(url)
+    def request(uri, headers, limit = 10, &block)
       req = Net::HTTP::Get.new(uri.path, headers)
 
       build_http(uri).request_get(uri.path, headers) do |res|
@@ -21,19 +17,25 @@ module BlackSky
         when Net::HTTPSuccess
           block.(res)
         when Net::HTTPRedirection
-          redirect(res, url, headers, limit, &block)
+          redirect(res, uri, headers, limit, &block)
         else
           warn "request is not success nor redirection"
         end
       end
     end
 
-    def redirect(res, url, headers, limit, &block)
+    def redirect(res, uri, headers, limit, &block)
       raise ArgumentError, "too many HTTP redirects" if limit.zero?
 
-      location = res['location']
-      warn "redirect to #{location}"
-      request(location, headers, limit - 1, &block)
+      new_uri = URI.parse(res['location'])
+      if new_uri.relative?
+        new_uri = uri + new_uri
+      end
+
+      # headers['Cookie'] = res['Set-Cookie'] if res['Set-Cookie']
+
+      warn "redirect to #{new_uri}"
+      request(new_uri, headers, limit - 1, &block)
     end
 
 

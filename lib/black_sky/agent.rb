@@ -59,7 +59,7 @@ module BlackSky
     def with(name, url, headers, &block)
       with_store(name) do
         with_temp do |file|
-          Request.new(url, headers).with do |res|
+          Request.new(url, headers) do |res|
             block.(file, res)
           end
         end
