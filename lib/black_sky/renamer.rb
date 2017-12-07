@@ -6,15 +6,14 @@ module BlackSky
 
     def rename(from, name)
       sync do
-        fresh = fresh_name(name)
-        #todo exception
+        fresh = fresh_name(name, ext)
         File.rename(from, fresh)
       end
     end
 
-    def copy(from, name)
+    def copy(from, name, ext)
       sync do
-        fresh = fresh_name(name)
+        fresh = fresh_name(name, ext)
         FileUtils.copy(from, fresh)
         File.chown(1000, 1000, fresh)
         File.chmod(0600, fresh)
@@ -22,7 +21,7 @@ module BlackSky
     end
 
     private
-    def fresh_name(name, ext = "mp4", count = 0)
+    def fresh_name(name, ext, count = 0)
       new_name = new_name(name, ext, count)
       if File.exist?(new_name)
         fresh_name(name, ext, count + 1)

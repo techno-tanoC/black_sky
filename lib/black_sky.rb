@@ -14,7 +14,7 @@ module BlackSky
       @store = Store.new
     end
 
-    def download(name, url, headers = {})
+    def download(name, ext, url, headers = {})
       Agent.new(name, @renamer, @store).async(url, headers)
     end
 

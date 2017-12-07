@@ -2,9 +2,9 @@ require 'tempfile'
 
 module BlackSky
   class Agent
-    def initialize(name, renamer, store)
+    def initialize(name, ext, renamer, store)
       @name = name.gsub("/", " ")
-      @renamer, @store = renamer, store
+      @ext, @renamer, @store = ext, renamer, store
       @pg, @thread = nil, nil
     end
 
@@ -33,7 +33,7 @@ module BlackSky
           @pg.increment(chunk.bytesize)
         end
 
-        @renamer.copy(file.path, @name)
+        @renamer.copy(file.path, @name, @ext)
       end
     end
 
