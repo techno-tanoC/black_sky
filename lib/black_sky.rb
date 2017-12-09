@@ -19,7 +19,7 @@ module BlackSky
     end
 
     def download(name, ext, url, headers = {})
-      Agent.new(name, @renamer, @store).async(url, headers)
+      Agent.new(name, ext, @renamer, @store).async(url, headers)
     end
 
     def all()
