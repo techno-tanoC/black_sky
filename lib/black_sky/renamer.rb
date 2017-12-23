@@ -15,14 +15,14 @@ module BlackSky
       sync do
         fresh = fresh_name(name, ext)
         FileUtils.copy(from, fresh)
-        File.chown(1000, 1000, fresh)
-        File.chmod(0600, fresh)
+        FileUtils.chown(1000, 1000, fresh)
+        FileUtils.chmod(0600, fresh)
       end
     end
 
     private
     def fresh_name(name, ext, count = 0)
-      new_name = new_name(name, ext, count)
+      new_name = build_path(name, ext, count)
       if File.exist?(new_name)
         fresh_name(name, ext, count + 1)
       else
@@ -30,12 +30,13 @@ module BlackSky
       end
     end
 
-    def new_name(name, ext, count)
-      if count.zero?
-        File.join(@dest, "#{name}.#{ext}")
-      else
-        File.join(@dest, "#{name}(#{count}).#{ext}")
-      end
+    def build_path(name, ext, count)
+      File.join(@dest, build_name(name, ext, count))
+    end
+
+    def build_name(name, ext, count)
+      tail = (ext.nil? || ext == "") ? "" : ".#{ext}"
+      name + (count.zero? ? "" : "(#{count})") + tail
     end
 
     def sync(&block)

@@ -16,4 +16,52 @@ RSpec.describe BlackSky::Renamer do
       end
     end
   end
+
+  describe '#copy' do
+    context 'with a extension' do
+      it 'copies the file' do
+        expected = <<~EOS
+          cp a ./b.c
+          chown 1000:1000 ./b.c
+          chmod 600 ./b.c
+        EOS
+
+        expect {
+          renamer.copy("a", "b", "c")
+        }.to output(expected).to_stderr_from_any_process
+      end
+    end
+
+    context 'without a extension' do
+      it 'copies the file' do
+        expected = <<~EOS
+          cp a ./b
+          chown 1000:1000 ./b
+          chmod 600 ./b
+        EOS
+
+        expect {
+          renamer.copy("a", "b", "")
+        }.to output(expected).to_stderr_from_any_process
+
+        expect {
+          renamer.copy("a", "b", nil)
+        }.to output(expected).to_stderr_from_any_process
+      end
+    end
+
+    context 'with duplicated file' do
+      it 'copies the file' do
+        expected = <<~EOS
+          cp Gemfile.lock ./Gemfile(1)
+          chown 1000:1000 ./Gemfile(1)
+          chmod 600 ./Gemfile(1)
+        EOS
+
+        expect {
+          renamer.copy("Gemfile.lock", "Gemfile", "")
+        }.to output(expected).to_stderr_from_any_process
+      end
+    end
+  end
 end
