@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe BlackSky::Renamer do
   let(:renamer) { BlackSky::Renamer.new(".") }
 

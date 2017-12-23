@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe BlackSky::Request do
   let(:url) { "http://www.example.com/" }
   let(:content) { File.read("#{File.dirname(__FILE__)}/../fixture/morikubo.jpg") }

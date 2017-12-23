@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe BlackSky::Progress do
   let(:pg) { BlackSky::Progress.new("hanamaru") }
   subject { pg.to_h }
